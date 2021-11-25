@@ -3,9 +3,8 @@ package core;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
-
-
 
 
 public class App {
@@ -14,74 +13,47 @@ public class App {
     private JPasswordField passwordField;
     private JButton okButton;
     private JButton registrierenButton;
-    private JPasswordField passwordFieldTest;
+    public ArrayList students = new ArrayList();
 
     public App() {
 
         okButton.addActionListener(new ActionListener() {
-            int count_false_input = 0;
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = userField.toString();
                 char[] password = passwordField.getPassword();
-
-                // todo: 1: Read DataBase if the user and password are correct
-                // todo: 2: Encryption password
-
-
-                // for Test passwordVerschluesselt
-                char [] passwordVerschluesselt = verschluesseln(12, password);
-                // todo:  user and password are correct // passwordentschluesseln
-                char [] passwordentschluesselt = entschluesseln(12, passwordVerschluesselt);
-
-                // todo: if another user set count_false_input == 0
-
-                // test correctPass
-                char[] correctPass = new char[] {'1', '2', '3'};
-                if (Arrays.equals(password, correctPass)) {
-                    System.out.println("Password is correct");
-                    Acc.AccnScreen();
-                } else {
-                    System.out.println("Incorrect password");
-                    count_false_input++;
+                if (students.size() == 0) {
                     JOptionPane.showMessageDialog(null, "username oder password nicht korrekt");
-                    // todo: if user count_false_input == 3 schreibe die felleingaben in die DB wenn 3 sperre denn acc
+
+                } else {
+                    for (int i = 0; i < students.size(); i++) {
+                        ArrayList student = (ArrayList) students.get(i);
+                        if (student.get(2).equals(userField.getText())) {
+
+                            char[] save_pw = student.get(3).toString().toCharArray();
+                            char[] save_pw_en = Password.entschluesseln(5, save_pw);
+                            if (Arrays.equals(password, save_pw_en)) {
+                                Acc.AccnScreen(students, i);
+                            } else {
+                                Integer num = (Integer) student.get(4);
+                                if (num < 3) {
+                                    num++;
+                                    student.set(4, num);
+                                }
+                                JOptionPane.showMessageDialog(null, "username oder password nicht korrekt");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "username oder password nicht korrekt");
+                        }
+                    }
                 }
             }
         });
         registrierenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                Registration nw = new Registration();
-                Registration.RegistrationScreen();
-
+                Registration.RegistrationScreen(students);
             }
         });
-    }
-    public static char[] verschluesseln(int offset, char[] charArray) {
-
-        char[] cryptArray = new char[charArray.length];
-        for (int i = 0; i < charArray.length; i++) {
-            int verschiebung = (charArray[i] + offset)%128;
-            cryptArray[i] = (char) (verschiebung);
-        }
-        return cryptArray;
-
-    }
-
-    // hier die Methode zum entschlüsseln
-
-    public static char[] entschluesseln(int offset, char[] charArray) {
-        char[] cryptArray = new char[charArray.length];
-        int verschiebung;
-        for (int i = 0; i < charArray.length; i++) {
-            if (charArray[i] - offset < 0)  verschiebung =
-                    charArray[i] - offset + 128;
-            else verschiebung = (charArray[i] - offset)%128;
-            cryptArray[i] = (char) (verschiebung);
-        }
-        return cryptArray;
-
     }
     public static void main(String[] args) {
         JFrame frame = new JFrame("App");
@@ -89,6 +61,8 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+
     }
 
 }
