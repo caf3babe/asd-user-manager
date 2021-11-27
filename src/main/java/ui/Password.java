@@ -1,4 +1,4 @@
-package core;
+package ui;
 
 public class Password {
     public static char[] verschluesseln(int offset, char[] charArray) {
