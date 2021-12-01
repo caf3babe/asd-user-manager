@@ -30,7 +30,7 @@ public class User {
         return this.lastName;
     }
 
-    //TODO: muss man an der Stelle das entschlüsseln?--Ich würde es nicht machen.Ilona
+    //TODO: muss man an der Stelle das entschlüsseln?
     public String getPassword() {
         return this.password;
     }
