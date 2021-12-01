@@ -6,38 +6,51 @@ import repository.UserRepository;
 import java.util.ArrayList;
 
 public class UserManager {
-    int loginTries = 0;
-    User loggedInUser;
-    ArrayList<User> persistentUser;
+    private int loginTries = 0;
+    private User loggedInUser;
+    private ArrayList<User> persistentUser;
+    private UserRepository userRepository = new UserRepository();
 
     public UserManager(){
-        UserRepository userRepository = new UserRepository();
         this.persistentUser = userRepository.getAll();
     }
 
     public boolean checkIfUserNameExists(String userName){
-        User user = new User();
-        // TODO: implement logic
-        return false;
+        return this.persistentUser.stream().anyMatch(user -> user.getUsername().equals(userName));
     }
 
-    public void registerUser(){
-        // TODO: implement logic
+    public boolean inputInvalid (String username,String firstname, String lastname, char [] password){
+        if(username.isEmpty()||firstname.isEmpty()||lastname.isEmpty()||password.length==0){
+            return true;
+        }else if(username==null||firstname==null||lastname==null||password==null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    public void deleteAccount(){
-        // TODO: implement logic
+    public void registerUser(String username,String firstname, String lastname, char [] password){
+        if(inputInvalid(username,firstname, lastname,password)){
+            throw new IllegalArgumentException("Invalid input!Try again:)");
+        }else if(this.checkIfUserNameExists(username)){
+            throw new IllegalArgumentException("Username already exists");
+        }else{
+            User user = new User(username,firstname,lastname,password);
+            userRepository.createUser(user);
+        }
     }
 
-    public void changePassword(){
+    public void deleteAccount(User user){
+       userRepository.deleteUser(user);
+    }
+
+    public void changePassword(User user){
         //TODO: implement logic
+        userRepository.updateUser(user);
     }
 
-    public void logout(){
-        //TODO: implement logic
-    }
+    public void logout(){ this.loggedInUser.setLoggedIn(false); }
 
-    public boolean isUserLoggedIn(){
-        return this.loggedInUser != null;
-    }
+
+    public boolean isUserLoggedIn(){ return this.loggedInUser.isLoggedIn(); }
 }
