@@ -1,35 +1,27 @@
 package core;
 
+import exceptions.UserNotFoundException;
 import models.User;
-import repository.UserRepository;
-import ui.Password;
-
-import java.util.ArrayList;
-import java.util.Optional;
+import repositories.UserRepository;
+import utils.InputValidation;
+import utils.PasswordHandling;
 
 public class UserManager {
-    private int loginTries = 0;
+    private final int loginTries = 0;
+    private final UserRepository userRepository;
     private User loggedInUser;
-    private ArrayList<User> persistentUser;
-    private UserRepository userRepository = new UserRepository();
 
     //TODO: Not sure we need a constructor here ?
-    public UserManager() {
-        this.persistentUser = userRepository.getAll();
+    public UserManager(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
 
-    public boolean checkIfUserNameExists(String userName) {
-        return this.persistentUser.stream().anyMatch(user -> user.getUsername().equals(userName));
+    public boolean checkIfUserNameExists(String userName){
+        return this.userRepository.getAll().stream().anyMatch(user -> user.getUsername().equals(userName));
     }
 
-    public User checkIfUserExists(String username) {
-        User tempUser = this.persistentUser.stream().findFirst().filter(user -> user.getUsername().equals(username)).get();
-        //User tempUser = userRepository.findUserByUserName(username);
-        if (tempUser == null) {
-            throw new NullPointerException("No user with this username found");
-        } else {
-            return tempUser;
-        }
+    public User getUserIfExists(String username) throws UserNotFoundException {
+        return this.userRepository.getByUsernameEqualsIgnoreCase(username).orElseThrow(() -> new UserNotFoundException("Could not find user in database"));
     }
 
     public void registerUser(String username, String firstname, String lastname, String password) {
@@ -42,14 +34,12 @@ public class UserManager {
         } else {
             User user = new User(username, firstname, lastname, password);
             userRepository.createUser(user);
-            this.persistentUser.add(user);
         }
     }
 
 
     //could be boolean as well
     public void deleteAccount(User user) {
-        this.persistentUser.remove(user);
         userRepository.deleteUser(user);
     }
 
@@ -68,7 +58,12 @@ public class UserManager {
     //TODO: missing window pane
     public void login(String username, String password) {
         InputValidation.passwordValidation(password);
-        User user = checkIfUserExists(username);
+        User user = null;
+        try {
+            user = this.getUserIfExists(username);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
         if (!PasswordHandling.checkPassword(password, user.getPassword())) {
             throw new IllegalArgumentException("Password is not correct");
         } else {
