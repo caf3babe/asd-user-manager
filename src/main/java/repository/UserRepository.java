@@ -17,7 +17,8 @@ public class UserRepository {
 
     public boolean createUser(User user){
         // TODO: implement saving logic
-        return false;
+        this.getAll().add(user);
+        return true;
     }
 
     public boolean updateUser(User user){
