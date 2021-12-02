@@ -1,5 +1,6 @@
 package models;
 
+import core.PasswordHandling;
 import ui.Password;
 
 public class User {
@@ -10,11 +11,11 @@ public class User {
     private String password;
     private boolean loggedIn;
 
-    public User(String username, String firstName, String lastName, char[] password){
+    public User(String username, String firstName, String lastName, String password){
         this.username=username;
         this.firstName=firstName;
         this.lastName=lastName;
-        this.password= new String(Password.verschluesseln(5,password));
+        this.password= PasswordHandling.hashPassword(password);
     }
 
 
@@ -30,14 +31,11 @@ public class User {
         return this.lastName;
     }
 
-    //TODO: muss man an der Stelle das entschlüsseln?--Ich würde es nicht machen.Ilona
     public String getPassword() {
         return this.password;
     }
 
-    public void setPassword(char [] password) {
-        this.password = new String(Password.verschluesseln(5,password));
-    }
+    public void setPassword(String password) { this.password = PasswordHandling.hashPassword(password); }
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;

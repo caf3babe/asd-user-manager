@@ -10,9 +10,15 @@ public class UserRepository {
         return new ArrayList<User>();
     }
 
+    public User findUserByUserName(String username){
+        //TODO:implement get User by username from database
+        return null;
+    }
+
     public boolean createUser(User user){
         // TODO: implement saving logic
-        return false;
+        this.getAll().add(user);
+        return true;
     }
 
     public boolean updateUser(User user){
