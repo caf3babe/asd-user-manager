@@ -1,23 +1,29 @@
 package ui;
 
+import ui.controller.ChangePasswordController;
+import ui.controller.DeleteButtonController;
+import ui.controller.LogoutButtonController;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
-import java.util.ArrayList;
 
 import java.awt.AWTEvent;
 import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.AWTEventListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-public class Acc {
+public class MainScreen {
+    private final JFrame frame;
+    private final ArrayList users;
     private JLabel vorname;
     private JLabel nachname;
     private JLabel username;
@@ -28,12 +34,27 @@ public class Acc {
     private Timer timer;
 
 
-    public Acc(ArrayList students, int i, JFrame frame) {
-        ArrayList student = (ArrayList) students.get(i);
+    public MainScreen(ArrayList users) {
+        this.users = users;
+        this.frame = new JFrame("User Manager - Main");
+        this.frame.setContentPane(acc);
+        this.frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        this.frame.pack();
+        this.frame.setVisible(true);
+        ArrayList student = (ArrayList) this.users.get(0);
         vorname.setText((String) student.get(0));
         nachname.setText((String) student.get(1));
         username.setText((String) student.get(2));
 
+
+        accountZuLoeschenButton.addActionListener(new DeleteButtonController(this));
+        logoutButton.addActionListener(new LogoutButtonController(this));
+        kennwortZuEandernButton.addActionListener(new ChangePasswordController(this));
+        acc.addFocusListener(new FocusAdapter() {});
+        addAutoCloseToFrame(frame);
+    }
+
+    private void addAutoCloseToFrame(JFrame frame) {
         // copyright start
         //http://www.java2s.com/Tutorials/Java/Swing_How_to/JFrame/Close_JFrame_after_user_inactivity.htm
         Toolkit.getDefaultToolkit().addAWTEventListener(
@@ -67,43 +88,46 @@ public class Acc {
             }
         });
         timer.start();
-        kennwortZuEandernButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                NewPassord.SavePasswordScreen(students, i);
-            }
-        }); // // copyright end
-
-
-        accountZuLoeschenButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String[] options = {"Ja", "Nein"};
-                int x = JOptionPane.showOptionDialog(null, "Wollen Sie den Account wirklich löschen",
-                        "Click a button",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-                if (x == 0){
-                    students.remove(i);
-                    frame.dispose();
-                }
-
-            }
-        });
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
-        acc.addFocusListener(new FocusAdapter() {
-        });
+         // // copyright end
     }
-    public static void AccnScreen(ArrayList students, int i) {
-        JFrame frame = new JFrame("Registration");
-        frame.setContentPane(new Acc(students,i,frame).acc);
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
 
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public ArrayList getUsers() {
+        return users;
+    }
+
+    public JLabel getVorname() {
+        return vorname;
+    }
+
+    public JLabel getNachname() {
+        return nachname;
+    }
+
+    public JLabel getUsername() {
+        return username;
+    }
+
+    public JButton getKennwortZuEandernButton() {
+        return kennwortZuEandernButton;
+    }
+
+    public JButton getAccountZuLoeschenButton() {
+        return accountZuLoeschenButton;
+    }
+
+    public JPanel getAcc() {
+        return acc;
+    }
+
+    public JButton getLogoutButton() {
+        return logoutButton;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 }
