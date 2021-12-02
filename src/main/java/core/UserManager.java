@@ -7,17 +7,19 @@ import utils.InputValidation;
 import utils.PasswordHandling;
 
 public class UserManager {
+
+    private static UserManager userManager;
     private final int loginTries = 0;
     private final UserRepository userRepository;
     private User loggedInUser;
 
     //TODO: Not sure we need a constructor here ?
-    public UserManager(UserRepository userRepository){
+    private UserManager(UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
     public boolean checkIfUserNameExists(String userName){
-        return this.userRepository.getAll().stream().anyMatch(user -> user.getUsername().equals(userName));
+        return this.userRepository.existsByUsernameEqualsIgnoreCase(userName);
     }
 
     public User getUserIfExists(String username) throws UserNotFoundException {
@@ -33,20 +35,20 @@ public class UserManager {
             throw new IllegalArgumentException("Username already exists");
         } else {
             User user = new User(username, firstname, lastname, password);
-            userRepository.createUser(user);
+            userRepository.save(user);
         }
     }
 
 
     //could be boolean as well
     public void deleteAccount(User user) {
-        userRepository.deleteUser(user);
+        userRepository.delete(user);
     }
 
     public void changePassword(String newPassword, String repeadPassword) {
         if (InputValidation.compareStrings(newPassword, repeadPassword)) {
             loggedInUser.setPassword(PasswordHandling.hashPassword(newPassword));
-            userRepository.updateUser(loggedInUser);
+            this.userRepository.save(loggedInUser);
         } else {
             throw new IllegalArgumentException("Inputs invalid or do not match!");
         }
