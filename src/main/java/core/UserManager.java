@@ -6,10 +6,12 @@ import repositories.UserRepository;
 import utils.InputValidation;
 import utils.PasswordHandling;
 
+import javax.swing.*;
+
 public class UserManager {
 
     private static UserManager userManager;
-    private final int loginTries = 0;
+    private int loginTries = 3;
     private final UserRepository userRepository;
     private User loggedInUser;
 
@@ -66,11 +68,15 @@ public class UserManager {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         }
-        if (!PasswordHandling.checkPassword(password, user.getPassword())) {
-            throw new IllegalArgumentException("Password is not correct");
-        } else {
-            loggedInUser = user;
-            loggedInUser.setLoggedIn(true);
+        if (loginTries !=0) {
+            if (!PasswordHandling.checkPassword(password, user.getPassword())) {
+                loginTries--;
+                JOptionPane.showMessageDialog(null, "Password is not correct. " + loginTries + " tries remaining.");
+                throw new IllegalArgumentException("Password is not correct");
+            } else {
+                loggedInUser = user;
+                loggedInUser.setLoggedIn(true);
+            }
         }
     }
 
