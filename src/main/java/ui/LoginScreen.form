@@ -78,7 +78,7 @@
             </constraints>
             <properties>
               <enabled value="true"/>
-              <text value="Registrieren"/>
+              <text value="Register"/>
             </properties>
           </component>
         </children>

@@ -3,10 +3,7 @@ package ui;
 import ui.controller.SaveButtonController;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class NewPasswordScreen {
 
@@ -14,7 +11,7 @@ public class NewPasswordScreen {
     private final ArrayList users;
     private JPasswordField passwordField1;
     private JPasswordField passwordField2;
-    private JButton saverPasswordButton;
+    private JButton savePasswordButton;
     private JPanel newPassword;
 
     public NewPasswordScreen(ArrayList users, int i) {
@@ -24,7 +21,7 @@ public class NewPasswordScreen {
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        saverPasswordButton.addActionListener(new SaveButtonController(this));
+        savePasswordButton.addActionListener(new SaveButtonController(this));
     }
 
     public JFrame getFrame() {
@@ -43,8 +40,8 @@ public class NewPasswordScreen {
         return passwordField2;
     }
 
-    public JButton getSaverPasswordButton() {
-        return saverPasswordButton;
+    public JButton getSavePasswordButton() {
+        return savePasswordButton;
     }
 
     public JPanel getNewPassword() {

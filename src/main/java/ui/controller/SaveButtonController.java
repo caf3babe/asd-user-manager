@@ -19,7 +19,7 @@ public class SaveButtonController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (this.newPassword.getPasswordField1().getPassword().length== 0){
-            JOptionPane.showMessageDialog(null, "Alle falder besetzen");
+            JOptionPane.showMessageDialog(null, "Please fill out every field.");
         }else {
             char[] password1 = this.newPassword.getPasswordField1().getPassword();
             char[] password2 = this.newPassword.getPasswordField2().getPassword();
@@ -31,7 +31,7 @@ public class SaveButtonController implements ActionListener {
                 student.set(3, str);
                 this.newPassword.getFrame().dispose();
             }else {
-                JOptionPane.showMessageDialog(null, "Kennwörter nicht gleich");
+                JOptionPane.showMessageDialog(null, "Passwords are not equal. Please redo.");
             }
         }
     }

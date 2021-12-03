@@ -1,6 +1,5 @@
 package ui.controller;
 
-import ui.MainScreen;
 import ui.Password;
 import ui.RegistrationScreen;
 
@@ -22,19 +21,19 @@ public class RegisterButtonController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Boolean sameUser = false;
 
-        ArrayList students = this.registrationScreen.getLoginScreen().getUsers();
+        ArrayList user = this.registrationScreen.getLoginScreen().getUsers();
 
-        for(int i=0; i < students.size(); i++){
-            System.out.println(students.get(i));
-            ArrayList student = (ArrayList) students.get(i);
+        for(int i=0; i < user.size(); i++){
+            System.out.println(user.get(i));
+            ArrayList student = (ArrayList) user.get(i);
             if (student.get(2).equals(this.registrationScreen.getUsername().getText())){
                 sameUser = true;
-                JOptionPane.showMessageDialog(null, "username ist bereits vergeben");
+                JOptionPane.showMessageDialog(null, "Username is already in use.");
             }
 
         }
-        if (this.registrationScreen.getVorname().getText().isEmpty() || this.registrationScreen.getNachname().getText().isEmpty() || this.registrationScreen.getUsername().getText().isEmpty() || this.registrationScreen.getPasswordFieldregi().getPassword().length== 0){
-            JOptionPane.showMessageDialog(null, "Alle falder besetzen");
+        if (this.registrationScreen.getFirstName().getText().isEmpty() || this.registrationScreen.getLastName().getText().isEmpty() || this.registrationScreen.getUsername().getText().isEmpty() || this.registrationScreen.getPasswordFieldregi().getPassword().length== 0){
+            JOptionPane.showMessageDialog(null, "Please fill out every field.");
         }
         else {
             if (!sameUser){
@@ -44,21 +43,21 @@ public class RegisterButtonController implements ActionListener {
 
                 if (Arrays.equals(password1, password2)) {
                     ArrayList myList = new ArrayList();
-                    myList.add(this.registrationScreen.getVorname().getText());
-                    myList.add(this.registrationScreen.getNachname().getText());
+                    myList.add(this.registrationScreen.getFirstName().getText());
+                    myList.add(this.registrationScreen.getLastName().getText());
                     myList.add(this.registrationScreen.getUsername().getText());
                     char[] savePassword = Password.verschluesseln(5, password1);
                     String str = new String(savePassword);
                     myList.add(str);
                     myList.add(0);
-                    students.add(myList);
+                    user.add(myList);
                     this.registrationScreen.getFrame().dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "password ist nicht gleich");
+                    JOptionPane.showMessageDialog(null, "Passwords are not equal. Please redo.");
                 }
             }
             else {
-                JOptionPane.showMessageDialog(null, "username ist bereits vergeben");
+                JOptionPane.showMessageDialog(null, "Username is already in use.");
             }
         }
     }

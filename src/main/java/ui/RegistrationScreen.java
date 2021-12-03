@@ -10,13 +10,13 @@ public class RegistrationScreen {
     private final JFrame frame;
     private final LoginScreen loginScreen;
     private JPanel registration;
-    private JTextField vorname;
-    private JTextField nachname;
+    private JTextField firstName;
+    private JTextField lastName;
     private JTextField username;
     private JPasswordField passwordFieldregi;
-    private JButton registrierenButton;
+    private JButton registerButton;
     private JPasswordField passwordField1;
-    private ArrayList students;
+    private ArrayList user;
 
     public RegistrationScreen(LoginScreen loginScreen) {
         this.loginScreen = loginScreen;
@@ -25,7 +25,7 @@ public class RegistrationScreen {
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        registrierenButton.addActionListener(new RegisterButtonController(this));
+        registerButton.addActionListener(new RegisterButtonController(this));
     }
 
     public JFrame getFrame() {
@@ -44,20 +44,20 @@ public class RegistrationScreen {
         this.registration = registration;
     }
 
-    public JTextField getVorname() {
-        return vorname;
+    public JTextField getFirstName() {
+        return firstName;
     }
 
-    public void setVorname(JTextField vorname) {
-        this.vorname = vorname;
+    public void setFirstName(JTextField firstName) {
+        this.firstName = firstName;
     }
 
-    public JTextField getNachname() {
-        return nachname;
+    public JTextField getLastName() {
+        return lastName;
     }
 
-    public void setNachname(JTextField nachname) {
-        this.nachname = nachname;
+    public void setLastName(JTextField lastName) {
+        this.lastName = lastName;
     }
 
     public JTextField getUsername() {
@@ -76,12 +76,12 @@ public class RegistrationScreen {
         this.passwordFieldregi = passwordFieldregi;
     }
 
-    public JButton getRegistrierenButton() {
-        return registrierenButton;
+    public JButton getRegisterButton() {
+        return registerButton;
     }
 
-    public void setRegistrierenButton(JButton registrierenButton) {
-        this.registrierenButton = registrierenButton;
+    public void setRegisterButton(JButton registerButton) {
+        this.registerButton = registerButton;
     }
 
     public JPasswordField getPasswordField1() {
@@ -92,11 +92,11 @@ public class RegistrationScreen {
         this.passwordField1 = passwordField1;
     }
 
-    public ArrayList getStudents() {
-        return students;
+    public ArrayList getUsers() {
+        return user;
     }
 
-    public void setStudents(ArrayList students) {
-        this.students = students;
+    public void setStudents(ArrayList user) {
+        this.user = user;
     }
 }
