@@ -6,8 +6,6 @@ import repositories.UserRepository;
 import utils.InputValidation;
 import utils.PasswordHandling;
 
-import javax.swing.*;
-
 public class UserManager {
 
     private static UserManager userManager;
@@ -15,12 +13,11 @@ public class UserManager {
     private final UserRepository userRepository;
     private User loggedInUser;
 
-    //TODO: Not sure we need a constructor here ?
-    private UserManager(UserRepository userRepository){
+    private UserManager(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public boolean checkIfUserNameExists(String userName){
+    public boolean checkIfUserNameExists(String userName) {
         return this.userRepository.existsByUsernameEqualsIgnoreCase(userName);
     }
 
@@ -41,8 +38,6 @@ public class UserManager {
         }
     }
 
-
-    //could be boolean as well
     public void deleteAccount(User user) {
         userRepository.delete(user);
     }
@@ -54,12 +49,8 @@ public class UserManager {
         } else {
             throw new IllegalArgumentException("Inputs invalid or do not match!");
         }
-
     }
 
-    //TODO: refactoring -> outsource methods and change login to boolean
-    //this login handels check + set current loggedInUser
-    //TODO: missing window pane
     public void login(String username, String password) {
         InputValidation.passwordValidation(password);
         User user = null;
@@ -68,27 +59,33 @@ public class UserManager {
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         }
-        if (loginTries !=0) {
+        if (loginTries > 0) {
             if (!PasswordHandling.checkPassword(password, user.getPassword())) {
                 loginTries--;
-                JOptionPane.showMessageDialog(null, "Password is not correct. " + loginTries + " tries remaining.");
-                throw new IllegalArgumentException("Password is not correct");
+                throw new IllegalArgumentException("Password is not correct. "+loginTries+" tries remaining.");
+            } else if(loginTries==0){
+                //Reset value to 3, after 3 tries
+                loginTries=3;
             } else {
+                loginTries=3;
                 loggedInUser = user;
                 loggedInUser.setLoggedIn(true);
             }
         }
     }
 
-    //TODO: has to be a boolean method for ui-> on logout close window
+    public int getLoginTries() {
+        return loginTries;
+    }
+
     public void logout() {
         this.loggedInUser.setLoggedIn(false);
     }
 
-    public User getCurrentUser(){
-        if(isUserLoggedIn()){
+    public User getCurrentUser() {
+        if (isUserLoggedIn()) {
             return this.loggedInUser;
-        }else{
+        } else {
             throw new NullPointerException("User is not logged in");
         }
     }
