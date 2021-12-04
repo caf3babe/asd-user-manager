@@ -1,21 +1,25 @@
-package at.ac.fhcampuswien.usermanager.core;
+package at.ac.fhcampuswien.usermanager;
 
 import at.ac.fhcampuswien.usermanager.exceptions.UserNotFoundException;
-import at.ac.fhcampuswien.usermanager.models.User;
-import at.ac.fhcampuswien.usermanager.repositories.UserRepository;
 import at.ac.fhcampuswien.usermanager.utils.InputValidation;
 import at.ac.fhcampuswien.usermanager.utils.PasswordHandling;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class UserManager {
 
     private int loginTries = 3;
-    private UserRepository userRepository;
     private User loggedInUser;
 
-    private UserManager(UserRepository userRepository) {
+    private final UserRepository userRepository;
+
+    public UserManager(UserRepository userRepository) {
         this.userRepository = userRepository;
+        System.out.println("UserManager was instantiated");
+        this.userRepository.findAll().forEach(user -> {
+            System.out.println(user);
+        });
     }
 
     public boolean checkIfUserNameExists(String userName) {
@@ -26,7 +30,7 @@ public class UserManager {
         return this.userRepository.getByUsernameEqualsIgnoreCase(username).orElseThrow(() -> new UserNotFoundException("Could not find user in database"));
     }
 
-    public void registerUser(String username, String firstname, String lastname, String password, String repeatedPassword) {
+    public void registerUser(String username, String firstname, String lastname, String password, String repeatedPassword) throws IllegalArgumentException {
         InputValidation.stringValidation(username);
         InputValidation.stringValidation(firstname);
         InputValidation.stringValidation(lastname);
@@ -34,18 +38,17 @@ public class UserManager {
         if (this.checkIfUserNameExists(username)) {
             throw new IllegalArgumentException("Username already exists");
         } else {
-
-            User user = new User(username, firstname, lastname, password);
+            User user = new User(username, firstname, lastname, PasswordHandling.hashPassword(password));
             userRepository.save(user);
         }
     }
 
-    public void deleteAccount(User user) {
-        userRepository.delete(user);
+    public void deleteAccount() {
+        userRepository.delete(this.loggedInUser);
     }
 
-    public void changePassword(String newPassword, String repeadPassword) {
-        if (InputValidation.compareStrings(newPassword, repeadPassword)) {
+    public void changePassword(String newPassword, String repeatedPassword) throws IllegalArgumentException {
+        if (InputValidation.compareStrings(newPassword, repeatedPassword)) {
             loggedInUser.setPassword(PasswordHandling.hashPassword(newPassword));
             this.userRepository.save(loggedInUser);
         } else {
@@ -53,14 +56,9 @@ public class UserManager {
         }
     }
 
-    public void login(String username, String password) {
+    public void login(String username, String password) throws IllegalArgumentException, UserNotFoundException{
         InputValidation.passwordValidation(password);
-        User user = null;
-        try {
-            user = this.getUserIfExists(username);
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
+        User user = this.getUserIfExists(username);
         if (loginTries > 0) {
             if (!PasswordHandling.checkPassword(password, user.getPassword())) {
                 loginTries--;
@@ -75,15 +73,11 @@ public class UserManager {
         }
     }
 
-    public int getLoginTries() {
-        return loginTries;
-    }
-
     public void logout() {
         this.loggedInUser = null;
     }
 
-    public User getCurrentUser() {
+    public User getCurrentUser() throws NullPointerException {
         if (isUserLoggedIn()) {
             return this.loggedInUser;
         } else {
@@ -94,5 +88,4 @@ public class UserManager {
     public boolean isUserLoggedIn() {
         return this.loggedInUser != null;
     }
-
 }

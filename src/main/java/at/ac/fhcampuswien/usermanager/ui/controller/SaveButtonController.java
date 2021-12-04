@@ -18,17 +18,28 @@ public class SaveButtonController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (this.newPassword.getPasswordField1().getPassword().length== 0){
+        String password = String.valueOf(this.newPassword.getPasswordField().getPassword());
+        String passwordRepeated = String.valueOf(this.newPassword.getPasswordRepeatField().getPassword());
+        try{
+            this.newPassword.getUserManager().changePassword(password, passwordRepeated);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this.newPassword.getFrame(), ex.getMessage());
+        }
+
+    }
+
+    private void oldMethod() {
+        if (this.newPassword.getPasswordField().getPassword().length== 0){
             JOptionPane.showMessageDialog(null, "Please fill out every field.");
         }else {
-            char[] password1 = this.newPassword.getPasswordField1().getPassword();
-            char[] password2 = this.newPassword.getPasswordField2().getPassword();
+            char[] password1 = this.newPassword.getPasswordField().getPassword();
+            char[] password2 = this.newPassword.getPasswordRepeatField().getPassword();
 
             if (Arrays.equals(password1, password2)) {
-                ArrayList student = (ArrayList) this.newPassword.getUsers().get(0);
+                //ArrayList student = (ArrayList) this.newPassword.getUsers().get(0);
                 char[] savePassword = Password.verschluesseln(5, password1);
                 String str = new String(savePassword);
-                student.set(3, str);
+                //student.set(3, str);
                 this.newPassword.getFrame().dispose();
             }else {
                 JOptionPane.showMessageDialog(null, "Passwords are not equal. Please redo.");

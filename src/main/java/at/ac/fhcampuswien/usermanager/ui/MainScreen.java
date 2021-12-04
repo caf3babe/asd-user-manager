@@ -1,8 +1,10 @@
 package at.ac.fhcampuswien.usermanager.ui;
 
+import at.ac.fhcampuswien.usermanager.UserManager;
 import at.ac.fhcampuswien.usermanager.ui.controller.ChangePasswordController;
 import at.ac.fhcampuswien.usermanager.ui.controller.DeleteButtonController;
 import at.ac.fhcampuswien.usermanager.ui.controller.LogoutButtonController;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,36 +14,39 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.util.ArrayList;
 
+@Getter
 public class MainScreen {
+
+    private final UserManager userManager;
     private final JFrame frame;
-    private final ArrayList users;
     private JLabel firstName;
     private JLabel lastName;
     private JLabel username;
     private JButton changePasswordButton;
     private JButton deleteAccountButton;
-    private JPanel acc;
+    private JPanel panel;
     private JButton logoutButton;
     private Timer timer;
 
 
-    public MainScreen(ArrayList users) {
-        this.users = users;
+    public MainScreen(UserManager userManager) {
+        this.userManager = userManager;
         this.frame = new JFrame("User Manager - Main");
-        this.frame.setContentPane(acc);
+        this.frame.setContentPane(panel);
         this.frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.frame.pack();
         this.frame.setVisible(true);
-        ArrayList user = (ArrayList) this.users.get(0);
-        firstName.setText((String) user.get(0));
-        lastName.setText((String) user.get(1));
-        username.setText((String) user.get(2));
 
+        this.firstName.setText(this.userManager.getCurrentUser().getFirstName());
+        this.lastName.setText(this.userManager.getCurrentUser().getLastName());
+        this.username.setText(this.userManager.getCurrentUser().getUsername());
 
         deleteAccountButton.addActionListener(new DeleteButtonController(this));
         logoutButton.addActionListener(new LogoutButtonController(this));
         changePasswordButton.addActionListener(new ChangePasswordController(this));
-        acc.addFocusListener(new FocusAdapter() {});
+
+        panel.addFocusListener(new FocusAdapter() {});
+
         addAutoCloseToFrame(frame);
     }
 
@@ -80,45 +85,5 @@ public class MainScreen {
         });
         timer.start();
          // // copyright end
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public ArrayList getUsers() {
-        return users;
-    }
-
-    public JLabel getFirstName() {
-        return firstName;
-    }
-
-    public JLabel getLastName() {
-        return lastName;
-    }
-
-    public JLabel getUsername() {
-        return username;
-    }
-
-    public JButton getChangePasswordButton() {
-        return changePasswordButton;
-    }
-
-    public JButton getDeleteAccountButton() {
-        return deleteAccountButton;
-    }
-
-    public JPanel getAcc() {
-        return acc;
-    }
-
-    public JButton getLogoutButton() {
-        return logoutButton;
-    }
-
-    public Timer getTimer() {
-        return timer;
     }
 }

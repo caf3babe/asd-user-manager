@@ -64,7 +64,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="fbc9" class="javax.swing.JPasswordField" binding="passwordFieldregi">
+          <component id="fbc9" class="javax.swing.JPasswordField" binding="passwordRepeatField">
             <constraints>
               <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -96,7 +96,7 @@
               <text value="Repeat Password"/>
             </properties>
           </component>
-          <component id="cfb9f" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
+          <component id="cfb9f" class="javax.swing.JPasswordField" binding="passwordField" default-binding="true">
             <constraints>
               <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>

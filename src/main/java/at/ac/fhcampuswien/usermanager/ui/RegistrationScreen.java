@@ -1,24 +1,29 @@
 package at.ac.fhcampuswien.usermanager.ui;
 
+import at.ac.fhcampuswien.usermanager.UserManager;
 import at.ac.fhcampuswien.usermanager.ui.controller.RegisterButtonController;
+import lombok.Getter;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
+@Getter
 public class RegistrationScreen {
 
     private final JFrame frame;
     private final LoginScreen loginScreen;
+    private final UserManager userManager;
     private JPanel registration;
     private JTextField firstName;
     private JTextField lastName;
     private JTextField username;
-    private JPasswordField passwordFieldregi;
     private JButton registerButton;
-    private JPasswordField passwordField1;
+    private JPasswordField passwordField;
+    private JPasswordField passwordRepeatField;
     private ArrayList user;
 
-    public RegistrationScreen(LoginScreen loginScreen) {
+    public RegistrationScreen(LoginScreen loginScreen, UserManager userManager) {
+        this.userManager = userManager;
         this.loginScreen = loginScreen;
         frame = new JFrame("User Manager - Registration");
         frame.setContentPane(registration);
@@ -28,72 +33,36 @@ public class RegistrationScreen {
         registerButton.addActionListener(new RegisterButtonController(this));
     }
 
-    public JFrame getFrame() {
-        return frame;
-    }
-
     public LoginScreen getLoginScreen() {
         return loginScreen;
-    }
-
-    public JPanel getRegistration() {
-        return registration;
     }
 
     public void setRegistration(JPanel registration) {
         this.registration = registration;
     }
 
-    public JTextField getFirstName() {
-        return firstName;
-    }
-
     public void setFirstName(JTextField firstName) {
         this.firstName = firstName;
-    }
-
-    public JTextField getLastName() {
-        return lastName;
     }
 
     public void setLastName(JTextField lastName) {
         this.lastName = lastName;
     }
 
-    public JTextField getUsername() {
-        return username;
-    }
-
     public void setUsername(JTextField username) {
         this.username = username;
     }
 
-    public JPasswordField getPasswordFieldregi() {
-        return passwordFieldregi;
-    }
-
-    public void setPasswordFieldregi(JPasswordField passwordFieldregi) {
-        this.passwordFieldregi = passwordFieldregi;
-    }
-
-    public JButton getRegisterButton() {
-        return registerButton;
+    public void setPasswordRepeatField(JPasswordField passwordRepeatField) {
+        this.passwordRepeatField = passwordRepeatField;
     }
 
     public void setRegisterButton(JButton registerButton) {
         this.registerButton = registerButton;
     }
 
-    public JPasswordField getPasswordField1() {
-        return passwordField1;
-    }
-
-    public void setPasswordField1(JPasswordField passwordField1) {
-        this.passwordField1 = passwordField1;
-    }
-
-    public ArrayList getUsers() {
-        return user;
+    public void setPasswordField(JPasswordField passwordField) {
+        this.passwordField = passwordField;
     }
 
     public void setStudents(ArrayList user) {

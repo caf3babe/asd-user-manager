@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.usermanager.ui.controller;
 
+import at.ac.fhcampuswien.usermanager.ui.LoginScreen;
 import at.ac.fhcampuswien.usermanager.ui.MainScreen;
 
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ public class LogoutButtonController implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        this.mainScreen.getUserManager().logout();
         this.mainScreen.getFrame().dispose();
     }
 }
