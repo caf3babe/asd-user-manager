@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.usermanager.ui.controller.ChangePasswordController;
 import at.ac.fhcampuswien.usermanager.ui.controller.DeleteButtonController;
 import at.ac.fhcampuswien.usermanager.ui.controller.LogoutButtonController;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,7 @@ import java.awt.event.FocusAdapter;
 import java.util.ArrayList;
 
 @Getter
+@Setter
 public class MainScreen {
 
     private final UserManager userManager;
@@ -33,9 +35,11 @@ public class MainScreen {
         this.userManager = userManager;
         this.frame = new JFrame("User Manager - Main");
         this.frame.setContentPane(panel);
-        this.frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        this.frame.pack();
+        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.frame.setSize(500, 500);
+        this.frame.setLocationRelativeTo(this.frame);
         this.frame.setVisible(true);
+        this.frame.pack();
 
         this.firstName.setText(this.userManager.getCurrentUser().getFirstName());
         this.lastName.setText(this.userManager.getCurrentUser().getLastName());
