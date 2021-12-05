@@ -22,6 +22,7 @@ public class SaveButtonController implements ActionListener {
         String passwordRepeated = String.valueOf(this.newPassword.getPasswordRepeatField().getPassword());
         try{
             this.newPassword.getUserManager().changePassword(password, passwordRepeated);
+            this.newPassword.getFrame().dispose();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this.newPassword.getFrame(), ex.getMessage());
         }

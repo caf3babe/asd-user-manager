@@ -10,10 +10,7 @@ import lombok.Setter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.AWTEventListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
-import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -81,12 +78,7 @@ public class MainScreen {
                         | AWTEvent.MOUSE_MOTION_EVENT_MASK
                         | AWTEvent.MOUSE_WHEEL_EVENT_MASK);
 
-        timer = new Timer(60000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
+        timer = new Timer(60000, new LogoutButtonController(this));
         timer.start();
          // // copyright end
     }

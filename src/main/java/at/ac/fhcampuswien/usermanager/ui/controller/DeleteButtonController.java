@@ -20,25 +20,19 @@ public class DeleteButtonController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try{
-            userManager.deleteAccount();
-            this.mainScreen.getFrame().dispose();
-            new LoginScreen(this.userManager);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this.mainScreen.getFrame(), ex.getMessage());
-        }
-
-        //oldMethod();
-    }
-
-    private void oldMethod() {
         String[] options = {"Yes", "No"};
         int x = JOptionPane.showOptionDialog(null, "Your account will be permanently deleted. Continue?",
                 "Click a button",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
         if (x == 0){
-            //this.mainScreen.getUsers().remove(0);
-            this.mainScreen.getFrame().dispose();
+            try{
+                userManager.deleteAccount();
+                this.mainScreen.getFrame().dispose();
+                new LoginScreen(this.userManager);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this.mainScreen.getFrame(), ex.getMessage());
+            }
         }
     }
+
 }

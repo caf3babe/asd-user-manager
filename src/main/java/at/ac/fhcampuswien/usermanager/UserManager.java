@@ -16,10 +16,6 @@ public class UserManager {
 
     public UserManager(UserRepository userRepository) {
         this.userRepository = userRepository;
-        System.out.println("UserManager was instantiated");
-        this.userRepository.findAll().forEach(user -> {
-            System.out.println(user);
-        });
     }
 
     public boolean checkIfUserNameExists(String userName) {
@@ -63,9 +59,6 @@ public class UserManager {
             if (!PasswordHandling.checkPassword(password, user.getPassword())) {
                 loginTries--;
                 throw new IllegalArgumentException("Password is not correct. "+loginTries+" tries remaining.");
-            } else if(loginTries==0){
-                //Reset value to 3, after 3 tries
-                loginTries=3;
             } else {
                 loginTries=3;
                 loggedInUser = user;

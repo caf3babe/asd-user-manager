@@ -27,6 +27,7 @@ public class LoginButtonController implements ActionListener {
         String password = String.valueOf(this.loginScreen.getPasswordField().getPassword());
         try{
             userManager.login(username, password);
+            this.loginScreen.getFrame().dispose();
             new MainScreen(this.userManager);
         } catch (IllegalArgumentException | UserNotFoundException ex) {
             JOptionPane.showMessageDialog(this.loginScreen.getFrame(), ex.getMessage());
