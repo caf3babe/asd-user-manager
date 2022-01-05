@@ -52,7 +52,6 @@ public class UserManager {
     }
 
     public void login(String username, String password) throws IllegalArgumentException, UserNotFoundException{
-        InputValidation.passwordValidation(password);
         User user = this.getUserIfExists(username);
         if (loginTries > 0) {
             if (!PasswordHandling.checkPassword(password, user.getPassword())) {
