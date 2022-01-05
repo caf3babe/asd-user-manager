@@ -1,8 +1,6 @@
 package at.ac.fhcampuswien.usermanager;
 
-import at.ac.fhcampuswien.usermanager.User;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
