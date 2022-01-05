@@ -23,6 +23,7 @@
         <!-- Latest stable release does not work with Maven Surefire 2.21.0 check: https://junit.org/junit5/docs/snapshot/user-guide/#running-tests-build-maven-->
         <junit.platform.version>1.7.1</junit.platform.version>
         <junit.jupiter.api>5.8.1</junit.jupiter.api>
+        <hamcrest.version>2.2</hamcrest.version>
     </properties>
     <dependencies>
 
@@ -52,6 +53,28 @@
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

@@ -4,7 +4,6 @@ import at.ac.fhcampuswien.usermanager.exceptions.UserNotFoundException;
 import at.ac.fhcampuswien.usermanager.utils.InputValidation;
 import at.ac.fhcampuswien.usermanager.utils.PasswordHandling;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class UserManager {
