@@ -3,13 +3,15 @@ package at.ac.fhcampuswien.usermanager;
 import at.ac.fhcampuswien.usermanager.exceptions.UserNotFoundException;
 import at.ac.fhcampuswien.usermanager.utils.InputValidation;
 import at.ac.fhcampuswien.usermanager.utils.PasswordHandling;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserManager {
 
+    @Getter
     private int loginTries = 3;
-    private User loggedInUser;
+    private User loggedInUser = null;
 
     private final UserRepository userRepository;
 
