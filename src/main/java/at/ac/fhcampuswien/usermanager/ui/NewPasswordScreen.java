@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 @Getter
 @Setter
