@@ -57,7 +57,7 @@ public class UserManager {
 
     public void login(String username, String password) throws IllegalArgumentException, UserNotFoundException{
         User user = this.getUserIfExists(username);
-        if (loginTries < MAX_LOGIN_TRIES) {
+        if (loginTries <= MAX_LOGIN_TRIES) {
             if (!PasswordHandling.checkPassword(password, user.getPassword())) {
                 loginTries++;
                 throw new IllegalArgumentException("Password is not correct. "+loginTries+" tries remaining.");
