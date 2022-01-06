@@ -4,11 +4,16 @@ import at.ac.fhcampuswien.usermanager.exceptions.UserNotFoundException;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 @SpringBootTest(classes = UserRepository.class)
+@RunWith(MockitoJUnitRunner.class)
 class UserManagerTest {
 
     UserManager userManager;
@@ -34,25 +39,21 @@ class UserManagerTest {
     }
 
 
-    // TODO: repair this test case
+    @Test
     void getUserIfExists(){
         Mockito
                 .when(userRepository.getByUsernameEqualsIgnoreCase("einNichtVorhandenerNameInDerDatenbank"))
-                .thenThrow(new UserNotFoundException("Could not find user in database"));
+                .thenReturn(Optional.empty());
 
         String userName = "einNichtVorhandenerNameInDerDatenbank";
         assertThrows(UserNotFoundException.class, () -> userManager.getUserIfExists(userName));
     }
 
-    // TODO: repair this test case
-    void checkIfUserIsCreated(){
-        User expectedUser = new User("nichil","Nichil", "Strasser", "password");
-        Mockito
-                .when(userRepository.save(expectedUser))
-                .thenReturn(expectedUser);
-
-        userManager.registerUser("nichil", "Nichil", "Strasser", "password", "password");
-
+    @Test
+    void checkIfUserIsCreated_doesNotThrowException(){
+        assertDoesNotThrow(() -> userManager.registerUser("nichil", "Nichil", "Strasser", "password", "password"));
     }
+
+
 
 }
