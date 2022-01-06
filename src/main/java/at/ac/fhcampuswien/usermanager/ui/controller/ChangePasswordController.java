@@ -10,10 +10,8 @@ import java.awt.event.ActionListener;
 public class ChangePasswordController implements ActionListener {
 
     private final UserManager userManager;
-    private final MainScreen mainScreen;
 
     public ChangePasswordController(MainScreen mainScreen) {
-        this.mainScreen = mainScreen;
         this.userManager = mainScreen.getUserManager();
     }
     @Override

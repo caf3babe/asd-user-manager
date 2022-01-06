@@ -10,7 +10,7 @@ class PasswordHandlingTest {
     void checkIf_hashPassword_hashesPassword(){
         String password = "aPasswordString123";
         String hashedPassword = PasswordHandling.hashPassword(password);
-        assertFalse(hashedPassword.equals(password));
+        assertNotEquals(hashedPassword, password);
     }
 
     @Test
