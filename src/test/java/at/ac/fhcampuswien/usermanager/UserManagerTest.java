@@ -37,7 +37,7 @@ class UserManagerTest {
         when(userRepository.existsByUsernameEqualsIgnoreCase("ilona"))
                 .thenReturn(true);
         String userName = "ilona";
-        assertTrue(userManager.checkIfUserNameExists(userName));
+        assertTrue(userManager.doesUserExistWithUserName(userName));
     }
 
     @Test
@@ -45,7 +45,7 @@ class UserManagerTest {
         when(userRepository.existsByUsernameEqualsIgnoreCase("ilona"))
                 .thenReturn(false);
         String userName = "ilona";
-        assertFalse(userManager.checkIfUserNameExists(userName));
+        assertFalse(userManager.doesUserExistWithUserName(userName));
     }
 
     @Test
@@ -139,7 +139,7 @@ class UserManagerTest {
 
     @Test
     void checkIf_getCurrentUser_throwsExceptionWhenUserNotLoggedIn() {
-        assertThrows(NullPointerException.class,
+        assertThrows(UserNotFoundException.class,
                 () -> userManager.getCurrentUser());
     }
 

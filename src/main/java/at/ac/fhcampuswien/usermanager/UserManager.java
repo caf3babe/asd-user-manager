@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class UserManager {
 
     private static final int MAX_LOGIN_TRIES = 3;
+    private static final int INITIAL_LOGIN_TRIES = 0;
 
     @Getter private int loginTries;
     private User loggedInUser;
@@ -18,24 +19,28 @@ public class UserManager {
 
     public UserManager(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.loginTries = 0;
+        this.loginTries = INITIAL_LOGIN_TRIES;
         this.loggedInUser = null;
     }
 
-    public boolean checkIfUserNameExists(String userName) {
+    public boolean doesUserExistWithUserName(String userName) {
         return this.userRepository.existsByUsernameEqualsIgnoreCase(userName);
     }
 
     public User getUserIfExists(String username) throws UserNotFoundException {
-        return this.userRepository.getByUsernameEqualsIgnoreCase(username).orElseThrow(() -> new UserNotFoundException("Could not find user in database"));
+        return this.userRepository
+                .getByUsernameEqualsIgnoreCase(username)
+                .orElseThrow(
+                        () -> new UserNotFoundException("Could not find user in database")
+                );
     }
 
     public void registerUser(String username, String firstname, String lastname, String password, String repeatedPassword) throws IllegalArgumentException {
-        InputValidation.stringValidation(username);
-        InputValidation.stringValidation(firstname);
-        InputValidation.stringValidation(lastname);
+        InputValidation.isEmpty(username);
+        InputValidation.isEmpty(firstname);
+        InputValidation.isEmpty(lastname);
         InputValidation.compareStrings(password, repeatedPassword);
-        if (this.checkIfUserNameExists(username)) {
+        if (this.doesUserExistWithUserName(username)) {
             throw new IllegalArgumentException("Username already exists");
         } else {
             User user = new User(username, firstname, lastname, PasswordHandling.hashPassword(password));
@@ -73,11 +78,11 @@ public class UserManager {
         this.loggedInUser = null;
     }
 
-    public User getCurrentUser() throws NullPointerException {
+    public User getCurrentUser() throws UserNotFoundException {
         if (isUserLoggedIn()) {
             return this.loggedInUser;
         } else {
-            throw new NullPointerException("User is not logged in");
+            throw new UserNotFoundException("User is not logged in");
         }
     }
 

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GUIAdapter {
-
     public GUIAdapter(UserManager userManager) {
         new LoginScreen(userManager);
     }
