@@ -11,14 +11,15 @@ public class UserManager {
 
     private static final int MAX_LOGIN_TRIES = 3;
 
-    @Getter
-    private int loginTries = 0;
-    private User loggedInUser = null;
+    @Getter private int loginTries;
+    private User loggedInUser;
 
     private final UserRepository userRepository;
 
     public UserManager(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.loginTries = 0;
+        this.loggedInUser = null;
     }
 
     public boolean checkIfUserNameExists(String userName) {
