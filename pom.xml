@@ -22,7 +22,6 @@
         <junit.platform.version>1.7.1</junit.platform.version>
         <junit.jupiter.api>5.8.1</junit.jupiter.api>
         <hamcrest.version>2.2</hamcrest.version>
-        <intellij.version>203.7148.57</intellij.version>
     </properties>
     <dependencies>
 
