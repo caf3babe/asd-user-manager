@@ -129,7 +129,7 @@ class UserManagerTest {
                             illegalArgumentException.getMessage());
                 },
                 () -> {
-                    int expectedLoginTries = 2;
+                    int expectedLoginTries = 1;
                     int actualLoginTries = userManager.getLoginTries();
                     assertEquals(expectedLoginTries, actualLoginTries);
                 });

@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserManager {
 
+    private static final int MAX_LOGIN_TRIES = 3;
+
     @Getter
-    private int loginTries = 3;
+    private int loginTries = 0;
     private User loggedInUser = null;
 
     private final UserRepository userRepository;
@@ -55,12 +57,12 @@ public class UserManager {
 
     public void login(String username, String password) throws IllegalArgumentException, UserNotFoundException{
         User user = this.getUserIfExists(username);
-        if (loginTries > 0) {
+        if (loginTries < MAX_LOGIN_TRIES) {
             if (!PasswordHandling.checkPassword(password, user.getPassword())) {
-                loginTries--;
+                loginTries++;
                 throw new IllegalArgumentException("Password is not correct. "+loginTries+" tries remaining.");
             } else {
-                loginTries=3;
+                loginTries=0;
                 loggedInUser = user;
             }
         }
