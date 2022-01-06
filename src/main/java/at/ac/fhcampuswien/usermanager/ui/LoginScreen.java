@@ -9,13 +9,11 @@ import lombok.Setter;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.ArrayList;
 
 @Getter
 @Setter
 public class LoginScreen {
 
-    private ArrayList users;
     private JFrame frame;
     private JPanel mainPanel;
     private JTextField userField;
