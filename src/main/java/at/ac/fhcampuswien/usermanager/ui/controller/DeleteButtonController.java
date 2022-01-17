@@ -20,11 +20,10 @@ public class DeleteButtonController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String[] options = {"Yes", "No"};
-        int x = JOptionPane.showOptionDialog(null, "Your account will be permanently deleted. Continue?",
-                "Click a button",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-        if (x == 0){
+        int deleteAccountOptionResponse = JOptionPane.showConfirmDialog(null,
+                "Your account will be permanently deleted. Continue?",
+                "Click a button", JOptionPane.OK_CANCEL_OPTION);
+        if (deleteAccountOptionResponse == JOptionPane.OK_OPTION){
             try{
                 userManager.deleteAccount();
                 this.mainScreen.getFrame().dispose();

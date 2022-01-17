@@ -18,11 +18,9 @@ package at.ac.fhcampuswien.usermanager;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -34,7 +32,6 @@ public class ApplicationConfigTest {
 
 	@Test
 	public void bootstrapAppFromJavaConfig() {
-
 		ApplicationContext context = new AnnotationConfigApplicationContext(InitGUI.class);
 		assertThat(context, is(notNullValue()));
 		assertThat(context.getBean(UserRepository.class), is(notNullValue()));
