@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag starvis/asd-user-manager:$(date +%s)
     - name: Push the image to Dockerhub
       run: docker push starvis/asd-user-manager
