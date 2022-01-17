@@ -14,6 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Run Codecov Goal
+      run: mvn cobertura:cobertura
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag starvis/asd-user-manager:$(date +%d%m%y)
     - name: Login to DockerHub
