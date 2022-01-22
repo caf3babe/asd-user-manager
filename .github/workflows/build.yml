@@ -7,11 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
@@ -23,3 +20,14 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Push the image to Dockerhub
       run: docker push starvis/asd-user-manager:$(date +%d%m%y)
+
+  codecov:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+      - run: 'mvn cobertura:cobertura'
+      - run: 'cd target/cobertura; bash <(curl -s https://codecov.io/bash)'
