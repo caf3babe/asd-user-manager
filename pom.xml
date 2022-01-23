@@ -4,18 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>at.ac.fhcampuswien</groupId>
+    <artifactId>usermanager</artifactId>
+    <version>0.1</version>
+    <name>User Manager</name>
+    <description>User Manager</description>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
-    <groupId>at.ac.fhcampuswien</groupId>
-    <artifactId>at.ac.fhcampuswien.usermanager</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>User Manager</name>
-    <description>User Manager</description>
 
     <properties>
         <junit.platform.version>1.7.1</junit.platform.version>
@@ -24,7 +24,7 @@
         <sonar.organization>starvis</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <!-- Coverage configuration -->
-        <jacoco.maven.version>0.8.6</jacoco.maven.version>
+        <jacoco.maven.version>0.8.7</jacoco.maven.version>
     </properties>
     <dependencies>
 
